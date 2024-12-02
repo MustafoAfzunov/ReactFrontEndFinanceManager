@@ -108,6 +108,14 @@ function RegisterPage() {
               onBlur={formik.handleBlur}
               error={formik.touched.username && Boolean(formik.errors.username)}
               helperText={formik.touched.username && formik.errors.username}
+              sx={{
+                '& .MuiInputBase-root': {
+                  backgroundColor: 'rgba(93, 83, 80, 0.8)',
+                  borderRadius: '10px',
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+                  padding: '10px 12px',
+                },
+              }}
             />
             <TextField
               label="Email"
@@ -122,6 +130,14 @@ function RegisterPage() {
               onBlur={formik.handleBlur}
               error={formik.touched.email && Boolean(formik.errors.email)}
               helperText={formik.touched.email && formik.errors.email}
+              sx={{
+                '& .MuiInputBase-root': {
+                  backgroundColor: 'rgba(93, 83, 80, 0.8)',
+                  borderRadius: '10px',
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+                  padding: '10px 12px',
+                },
+              }}
             />
             <TextField
               label="Password"
@@ -136,6 +152,14 @@ function RegisterPage() {
               onBlur={formik.handleBlur}
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
+              sx={{
+                '& .MuiInputBase-root': {
+                  backgroundColor: 'rgba(93, 83, 80, 0.8)',
+                  borderRadius: '10px',
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+                  padding: '10px 12px',
+                },
+              }}
             />
             <Button
               type="submit"
@@ -148,7 +172,20 @@ function RegisterPage() {
               {formik.isSubmitting ? 'Registering...' : 'Register'}
             </Button>
             <Typography variant="body2" align="center">
-              Already have an account? <Link to="/login">Login here</Link>.
+              Already have an account? <Link
+                to="/login"
+                style={{
+                  color: '#1976d2',
+                  fontWeight: 'bold',
+                  textDecoration: 'none',
+                  marginLeft: '5px',
+                  transition: 'color 0.3s ease',
+                }}
+                onMouseEnter={(e) => e.target.style.color = '#1565c0'}
+                onMouseLeave={(e) => e.target.style.color = '#1976d2'}
+              >
+                Login here
+              </Link>
             </Typography>
           </Box>
         </Box>
