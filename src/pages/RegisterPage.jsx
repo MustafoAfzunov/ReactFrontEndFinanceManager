@@ -1,4 +1,3 @@
-// src/pages/RegisterPage.jsx
 import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -27,104 +26,134 @@ function RegisterPage() {
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
         const response = await axios.post('/user/register', values);
-        console.log('Registration response:', response);
-
-        // Check for token in response
         const token = response.data.accessToken || response.data.token;
         if (token) {
           setAuthToken(token);
           enqueueSnackbar('Registration successful!', { variant: 'success' });
-          navigate('/'); // Navigate to the main page or dashboard
+          navigate('/');
         } else {
-          const errorMessage = response.data.message || 'Registration failed. Please try again.';
-          enqueueSnackbar(errorMessage, { variant: 'error' });
-          setErrors({ general: errorMessage });
+          enqueueSnackbar('Registration failed. Token not found.', { variant: 'error' });
+          setErrors({ general: 'Registration failed. Please try again.' });
         }
       } catch (error) {
         let errorMessage = 'Registration failed. Please try again.';
-
         if (error.response && error.response.data) {
           errorMessage = error.response.data.message || errorMessage;
-        } else if (error.request) {
-          errorMessage = 'No response from server. Please try again later.';
-        } else {
-          errorMessage = error.message;
         }
-
         enqueueSnackbar(errorMessage, { variant: 'error' });
         setErrors({ general: errorMessage });
-        console.error('Registration Error:', error);
       } finally {
-        setSubmitting(false); // Moved setSubmitting(false) to finally block
+        setSubmitting(false);
       }
     },
   });
 
   return (
-    <Container maxWidth="sm">
-      <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Register
-        </Typography>
-        <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
-          {formik.errors.general && <Alert severity="error">{formik.errors.general}</Alert>}
-          <TextField
-            label="Username"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="username"
-            value={formik.values.username}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.username && Boolean(formik.errors.username)}
-            helperText={formik.touched.username && formik.errors.username}
-          />
-          <TextField
-            label="Email"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="email"
-            type="email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
-          />
-          <TextField
-            label="Password"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            type="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.password && Boolean(formik.errors.password)}
-            helperText={formik.touched.password && formik.errors.password}
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            disabled={formik.isSubmitting}
-            sx={{ mt: 3, mb: 2 }}
+    <Box
+      sx={{
+        height: '100vh',
+        backgroundImage: 'url(https://t3.ftcdn.net/jpg/05/01/22/12/360_F_501221203_rq2bKSKuB7dPpUJIImNIEnEeHqIfzAAJ.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Container
+        maxWidth="sm"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            backgroundColor: 'rgba(93, 83, 80, 0.8)',
+            borderRadius: '24px',
+            boxShadow: '0px 8px 40px rgba(0, 0, 0, 0.3)',
+            padding: '3rem',
+            width: '100%',
+            maxWidth: '500px',
+            height: 'auto',
+            '@media (max-width:600px)': {
+              padding: '1.5rem',
+              maxWidth: '90%',
+            },
+          }}
+        >
+          <Typography
+            variant="h4"
+            component="h2"
+            gutterBottom
+            sx={{ letterSpacing: '3px', textAlign: 'center' }}
           >
-            {formik.isSubmitting ? 'Registering...' : 'Register'}
-          </Button>
-          <Typography variant="body2" align="center">
-            Already have an account? <Link to="/login">Login here</Link>.
+            Register
           </Typography>
+          <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
+            {formik.errors.general && <Alert severity="error">{formik.errors.general}</Alert>}
+            <TextField
+              label="Username"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="username"
+              value={formik.values.username}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.username && Boolean(formik.errors.username)}
+              helperText={formik.touched.username && formik.errors.username}
+            />
+            <TextField
+              label="Email"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="email"
+              type="email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+            />
+            <TextField
+              label="Password"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              type="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              disabled={formik.isSubmitting}
+              sx={{ mt: 3, mb: 2 }}
+            >
+              {formik.isSubmitting ? 'Registering...' : 'Register'}
+            </Button>
+            <Typography variant="body2" align="center">
+              Already have an account? <Link to="/login">Login here</Link>.
+            </Typography>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </Box>
   );
 }
 

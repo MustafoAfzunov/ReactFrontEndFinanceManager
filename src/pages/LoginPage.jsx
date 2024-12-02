@@ -1,18 +1,10 @@
-// src/pages/LoginPage.jsx
 import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from '../utils/axiosConfig';
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-import {
-  Container,
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Alert,
-} from '@mui/material';
+import { Container, TextField, Button, Typography, Box, Alert } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
 function LoginPage() {
@@ -32,39 +24,22 @@ function LoginPage() {
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
         const response = await axios.post('/user/login', values);
-        console.log('Login response:', response);
-        console.log('Response data:', response.data);
-
-        // Adjust the token extraction based on actual response
-        const token =
-          response.data.accessToken ||
-          response.data.token ||
-          response.data.jwt;
-        console.log('Extracted token:', token);
-
+        const token = response.data.accessToken || response.data.token || response.data.jwt;
         if (token) {
-          console.log('Setting auth token');
           setAuthToken(token);
           enqueueSnackbar('Login successful!', { variant: 'success' });
           navigate('/');
         } else {
-          console.error('Token not found in response:', response.data);
-          throw new Error('Login failed: Token not found');
+          enqueueSnackbar('Login failed. Token not found.', { variant: 'error' });
+          setErrors({ general: 'Login failed. Please try again.' });
         }
       } catch (error) {
         let errorMessage = 'Login failed. Please try again.';
-
         if (error.response && error.response.data) {
           errorMessage = error.response.data.message || errorMessage;
-        } else if (error.request) {
-          errorMessage = 'No response from server. Please try again later.';
-        } else {
-          errorMessage = error.message;
         }
-
         enqueueSnackbar(errorMessage, { variant: 'error' });
         setErrors({ general: errorMessage });
-        console.error('Login Error:', error);
       } finally {
         setSubmitting(false);
       }
@@ -72,64 +47,127 @@ function LoginPage() {
   });
 
   return (
-    <Container maxWidth="sm">
-      <Box
-        sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+    <Box
+      sx={{
+        height: '100vh',
+        backgroundImage: 'url(https://t3.ftcdn.net/jpg/05/01/22/12/360_F_501221203_rq2bKSKuB7dPpUJIImNIEnEeHqIfzAAJ.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Container
+        maxWidth="sm"
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
       >
-        <Typography variant="h4" component="h1" gutterBottom>
-          Login
-        </Typography>
-        <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
-          {formik.errors.general && (
-            <Alert severity="error">{formik.errors.general}</Alert>
-          )}
-          <TextField
-            label="Username or Email"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="username"
-            value={formik.values.username}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.username && Boolean(formik.errors.username)
-            }
-            helperText={formik.touched.username && formik.errors.username}
-          />
-          <TextField
-            label="Password"
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            type="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.password && Boolean(formik.errors.password)
-            }
-            helperText={formik.touched.password && formik.errors.password}
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            disabled={formik.isSubmitting}
-            sx={{ mt: 3, mb: 2 }}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            backgroundColor: 'rgba(93, 83, 80, 0.8)',
+            borderRadius: '24px',
+            boxShadow: '0px 8px 40px rgba(0, 0, 0, 0.3)',
+            padding: '3rem',
+            width: '100%',
+            maxWidth: '500px',
+            height: 'auto',
+            '@media (max-width:600px)': {
+              padding: '1.5rem',
+              maxWidth: '90%', // Max width for mobile
+            },
+          }}
+        >
+          <Typography
+            variant="h4"
+            component="h2"
+            gutterBottom
+            sx={{ letterSpacing: '3px', textAlign: 'center' }}
           >
-            {formik.isSubmitting ? 'Logging in...' : 'Login'}
-          </Button>
-          <Typography variant="body2" align="center">
-            Don't have an account? <Link to="/register">Register here</Link>.
+            Login
           </Typography>
+          <Box component="form" onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
+            {formik.errors.general && <Alert severity="error">{formik.errors.general}</Alert>}
+            <TextField
+              label="Username"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="username"
+              value={formik.values.username}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.username && Boolean(formik.errors.username)}
+              helperText={formik.touched.username && formik.errors.username}
+              sx={{
+                '& .MuiInputBase-root': {
+                  backgroundColor: 'rgba(93, 83, 80, 0.8)',
+                  borderRadius: '10px',
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+                  padding: '10px 12px',
+                },
+              }}
+            />
+            <TextField
+              label="Password"
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              type="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+              sx={{
+                '& .MuiInputBase-root': {
+                  backgroundColor: 'rgba(93, 83, 80, 0.8)',
+                  borderRadius: '10px',
+                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+                  padding: '10px 12px',
+                },
+              }}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              disabled={formik.isSubmitting}
+              sx={{ mt: 3, mb: 2 }}
+            >
+              {formik.isSubmitting ? 'Logging in...' : 'Login'}
+            </Button>
+            <Typography variant="body1" align="center">
+              Don't have an account?{' '}
+              <Link
+                to="/register"
+                style={{
+                  color: '#1976d2',
+                  fontWeight: 'bold',
+                  textDecoration: 'none',
+                  marginLeft: '5px',
+                  transition: 'color 0.3s ease',
+                }}
+                onMouseEnter={(e) => e.target.style.color = '#1565c0'}
+                onMouseLeave={(e) => e.target.style.color = '#1976d2'}
+              >
+                Register here
+              </Link>
+            </Typography>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </Box>
   );
 }
 
