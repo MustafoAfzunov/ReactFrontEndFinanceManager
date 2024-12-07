@@ -1,4 +1,3 @@
-// src/components/ExpenseList.jsx
 import React from 'react';
 import { List, ListItem, ListItemText, Typography, CircularProgress } from '@mui/material';
 
@@ -8,11 +7,16 @@ function ExpenseList({ expenses }) {
 
   return (
     <div>
-      <Typography variant="h6">Expenses</Typography>
+      <Typography variant="h6" gutterBottom>
+        Expenses
+      </Typography>
       <List>
-        {expenses.map((expense) => (
-          <ListItem key={expense.id}>
-            <ListItemText primary={expense.description} secondary={`Amount: $${expense.amount}`} />
+        {expenses.map((expense, index) => (
+          <ListItem key={expense.id || `expense-${index}`}>
+            <ListItemText 
+              primary={expense.description} 
+              secondary={`Amount: $${expense.amount}`} 
+            />
           </ListItem>
         ))}
       </List>

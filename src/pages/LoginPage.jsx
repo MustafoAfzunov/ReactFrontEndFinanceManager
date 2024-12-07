@@ -50,7 +50,7 @@ function LoginPage() {
     <Box
       sx={{
         height: '100vh',
-        backgroundImage: 'url(https://t3.ftcdn.net/jpg/05/01/22/12/360_F_501221203_rq2bKSKuB7dPpUJIImNIEnEeHqIfzAAJ.jpg)',
+        backgroundImage: 'url(https://watermark.lovepik.com/photo/40169/8241.jpg_wh1200.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         display: 'flex',

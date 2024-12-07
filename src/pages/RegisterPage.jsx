@@ -52,7 +52,7 @@ function RegisterPage() {
     <Box
       sx={{
         height: '100vh',
-        backgroundImage: 'url(https://t3.ftcdn.net/jpg/05/01/22/12/360_F_501221203_rq2bKSKuB7dPpUJIImNIEnEeHqIfzAAJ.jpg)',
+        backgroundImage: 'url(https://mrwallpaper.com/images/hd/finance-digital-blue-graph-3rpv84d278m83dx1.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         display: 'flex',
