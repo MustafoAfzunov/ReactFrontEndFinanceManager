@@ -12,16 +12,39 @@ function IncomeList({ incomes }) {
       </Typography>
       <List>
         {incomes.map((income, index) => (
-          <ListItem key={income.id || `income-${index}`}>
-            <ListItemText 
-              primary={income.source} 
-              secondary={`Amount: $${income.amount}`} 
+          <ListItem
+            key={income.id || `income-${index}`}
+            sx={{
+              backgroundColor: 'rgba(0, 0, 0, 0.6)', // Optional: Background for each item
+              borderRadius: '8px',
+              padding: '10px',
+              marginBottom: '8px',
+            }}
+          >
+            <ListItemText
+              primary={`Description: ${income.source}`}
+              secondary={`Amount: $${income.amount}`}
+              sx={{
+                '& .MuiTypography-root': {
+                  color: 'white',
+                },
+                '& .MuiListItemText-primary': {
+                  fontWeight: 'bold',
+                  fontSize: '20px',
+                },
+                '& .MuiListItemText-secondary': {
+                  fontSize: '17px',
+                  fontStyle: 'italic',
+                },
+              }}
             />
           </ListItem>
         ))}
       </List>
     </div>
   );
+  
+  
 }
 
 export default IncomeList;

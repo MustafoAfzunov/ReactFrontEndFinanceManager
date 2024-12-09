@@ -36,7 +36,7 @@ function RegisterPage() {
           setErrors({ general: 'Registration failed. Please try again.' });
         }
       } catch (error) {
-        let errorMessage = 'Registration failed. Please try again.';
+        let errorMessage = 'Registration failed. Username or Email exists!';
         if (error.response && error.response.data) {
           errorMessage = error.response.data.message || errorMessage;
         }
