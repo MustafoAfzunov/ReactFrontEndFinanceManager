@@ -7,19 +7,19 @@ import { useSnackbar } from 'notistack';
 function AddIncomeForm({ fetchIncomes, fetchBalance }) {
   const [source, setSource] = useState('');
   const [amount, setAmount] = useState('');
-  const [date, setDate] = useState('');
   const [error, setError] = useState('');
   const { enqueueSnackbar } = useSnackbar();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!amount) {
+    if (!source.trim() || !amount) {
       setError('All fields are required.');
       return;
     }
 
     axios.post('/incomes/add-income', {
+      source: source.trim(),
       amount: parseFloat(amount),
     })
       .then(() => {
@@ -27,7 +27,6 @@ function AddIncomeForm({ fetchIncomes, fetchBalance }) {
         if (fetchBalance) fetchBalance();
         setSource('');
         setAmount('');
-        setDate('');
         setError('');
         enqueueSnackbar('Income added successfully!', { variant: 'success' });
       })
@@ -41,6 +40,15 @@ function AddIncomeForm({ fetchIncomes, fetchBalance }) {
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2, mb: 2 }}>
       {error && <Alert severity="error">{error}</Alert>}
+      <TextField
+        label="Source"
+        variant="outlined"
+        margin="normal"
+        required
+        fullWidth
+        value={source}
+        onChange={(e) => setSource(e.target.value)}
+      />
       <TextField
         label="Amount"
         variant="outlined"

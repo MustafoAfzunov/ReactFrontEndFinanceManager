@@ -4,22 +4,24 @@ import IncomeList from '../components/IncomeList';
 import ExpenseList from '../components/ExpenseList';
 import AddExpenseForm from '../components/AddExpenseForm';
 import AddIncomeForm from '../components/AddIncomeForm';
-import AnalyticsPage from './AnalyticsPage'; // Import the analytics page
+import AnalyticsPage from './AnalyticsPage';
 import { Container, Typography, Box, Button } from '@mui/material';
 import { AuthContext } from '../context/AuthContext';
 import axios from '../utils/axiosConfig';
 
 function Dashboard() {
-  const { logout } = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext); // Assume user has token if needed
   const [incomes, setIncomes] = useState([]);
   const [expenses, setExpenses] = useState([]);
   const [balance, setBalance] = useState(null);
-  const [showAnalytics, setShowAnalytics] = useState(false); // Toggle between pages
-  const [loading, setLoading] = useState(true); // Loading state for API calls
+  const [showAnalytics, setShowAnalytics] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchIncomes = async () => {
     try {
-      const response = await axios.get('/incomes/list-incomes');
+      const response = await axios.get('/incomes/list-incomes', {
+        headers: { Authorization: `Bearer ${user?.token}` }
+      });
       setIncomes(response.data.incomes || response.data);
     } catch (error) {
       console.error('Error fetching incomes:', error);
@@ -28,7 +30,9 @@ function Dashboard() {
 
   const fetchExpenses = async () => {
     try {
-      const response = await axios.get('/expenses/list-expenses');
+      const response = await axios.get('/expenses/list-expenses', {
+        headers: { Authorization: `Bearer ${user?.token}` }
+      });
       setExpenses(response.data.expenses || response.data);
     } catch (error) {
       console.error('Error fetching expenses:', error);
@@ -37,10 +41,15 @@ function Dashboard() {
 
   const fetchBalance = async () => {
     try {
-      const response = await axios.get('/balance/get-balance');
-      setBalance(response.data.balance || response.data);
+      const response = await axios.get('/balance/get-balance', {
+        headers: { Authorization: `Bearer ${user?.token}` }
+      });
+      console.log('Fetched balance:', response.data); // Will show a number like 123.45
+      setBalance(response.data); 
     } catch (error) {
       console.error('Error fetching balance:', error);
+      // Optionally set a fallback or display an error message
+      setBalance(0); 
     }
   };
 
@@ -52,7 +61,6 @@ function Dashboard() {
     fetchData();
   }, []);
 
-  // Show loading state while fetching data
   if (loading) {
     return (
       <Box
@@ -119,10 +127,8 @@ function Dashboard() {
           </Button>
         </Box>
 
-        {/* Render Dashboard or Analytics */}
         {!showAnalytics ? (
           <>
-            {/* Header Section */}
             <Box
               sx={{
                 mb: 6,
@@ -142,11 +148,10 @@ function Dashboard() {
               </Button>
             </Box>
 
-            {/* Balance Display */}
             <Box
               sx={{
                 mb: 6,
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                backgroundColor: 'rgba(255, 288, 233, 0.2)',
                 borderRadius: '16px',
                 padding: '2rem',
                 textAlign: 'center',
@@ -167,7 +172,6 @@ function Dashboard() {
               <BalanceDisplay balance={balance} />
             </Box>
 
-            {/* Income and Expense Lists */}
             <Box
               sx={{
                 display: 'flex',
@@ -180,7 +184,7 @@ function Dashboard() {
               <Box
                 sx={{
                   flex: '1 1 48%',
-                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                  backgroundColor: 'rgba(255, 288, 233, 0.2)',
                   borderRadius: '16px',
                   padding: '2rem',
                   color: 'white',
@@ -192,7 +196,7 @@ function Dashboard() {
               <Box
                 sx={{
                   flex: '1 1 48%',
-                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                  backgroundColor: 'rgba(255, 288, 233, 0.2)',
                   borderRadius: '16px',
                   padding: '2rem',
                   color: 'white',
@@ -203,7 +207,6 @@ function Dashboard() {
               </Box>
             </Box>
 
-            {/* Add Income and Add Expense Forms */}
             <Box
               sx={{
                 display: 'flex',
@@ -215,7 +218,7 @@ function Dashboard() {
               <Box
                 sx={{
                   flex: '1 1 48%',
-                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                  backgroundColor: 'rgba(255, 288, 233, 0.2)',
                   borderRadius: '16px',
                   padding: '2rem',
                   color: 'white',
@@ -231,7 +234,7 @@ function Dashboard() {
               <Box
                 sx={{
                   flex: '1 1 48%',
-                  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                  backgroundColor: 'rgba(255, 288, 233, 0.2)',
                   borderRadius: '16px',
                   padding: '2rem',
                   color: 'white',
@@ -243,15 +246,11 @@ function Dashboard() {
                 </Typography>
                 <AddExpenseForm fetchExpenses={fetchExpenses} fetchBalance={fetchBalance} />
               </Box>
-
             </Box>
           </>
         ) : (
-          
-          <AnalyticsPage incomes={incomes} expenses={expenses} > </AnalyticsPage>
-          
+          <AnalyticsPage incomes={incomes} expenses={expenses} />
         )}
-        
       </Container>
     </Box>
   );

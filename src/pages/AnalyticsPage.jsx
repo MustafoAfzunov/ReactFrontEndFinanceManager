@@ -18,7 +18,7 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 function AnalyticsPage({ incomes = [], expenses = [] }) {
   // Generate labels dynamically based on the larger of the two lists
   const maxEntries = Math.max(incomes.length, expenses.length);
-  const labels = Array.from({ length: maxEntries }, (_, i) => `Entry ${i + 1}`);
+  const labels = Array.from({ length: maxEntries }, (_, i) => `Week ${i + 1}`);
 
   // Map data for the graph
   const incomeAmounts = incomes.map((income) => income.amount);

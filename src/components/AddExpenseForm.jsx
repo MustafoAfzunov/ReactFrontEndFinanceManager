@@ -5,7 +5,7 @@ import { TextField, Button, Box, Alert } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
 function AddExpenseForm({ fetchExpenses, fetchBalance }) {
-  const [description, setDescription] = useState('');
+  const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
   const [error, setError] = useState('');
   const { enqueueSnackbar } = useSnackbar();
@@ -14,15 +14,18 @@ function AddExpenseForm({ fetchExpenses, fetchBalance }) {
     e.preventDefault();
     setError('');
 
-    if (!amount) {
-      setError('Please provide both description and amount.');
+    if (!category.trim() || !amount) {
+      setError('Please provide both category and amount.');
       return;
     }
 
-    axios.post('/expenses/add-expense', { amount: parseFloat(amount) })
+    axios.post('/expenses/add-expense', {
+      category: category.trim(),
+      amount: parseFloat(amount),
+    })
       .then(response => {
         enqueueSnackbar('Expense added successfully!', { variant: 'success' });
-        setDescription('');
+        setCategory('');
         setAmount('');
         if (fetchExpenses) fetchExpenses();
         if (fetchBalance) fetchBalance();
@@ -37,6 +40,15 @@ function AddExpenseForm({ fetchExpenses, fetchBalance }) {
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
       {error && <Alert severity="error">{error}</Alert>}
+      <TextField
+        label="Category"
+        variant="outlined"
+        fullWidth
+        required
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+        sx={{ mb: 2 }}
+      />
       <TextField
         label="Amount"
         variant="outlined"

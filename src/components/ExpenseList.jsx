@@ -14,7 +14,7 @@ function ExpenseList({ expenses }) {
         {expenses.map((expense, index) => (
           <ListItem key={expense.id || `expense-${index}`}>
             <ListItemText 
-              primary={expense.description} 
+              primary={expense.category} 
               secondary={`Amount: $${expense.amount}`} 
             />
           </ListItem>
