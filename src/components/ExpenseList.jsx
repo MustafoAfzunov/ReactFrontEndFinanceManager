@@ -23,7 +23,17 @@ function ExpenseList({ expenses }) {
           >
             <ListItemText
               primary={`Description: ${expense.category}`}
-              secondary={`Amount: $${expense.amount}`}
+              secondary={
+                <>
+                  <Typography variant="body2" component="span">
+                    Amount: ${expense.amount}
+                  </Typography>
+                  <br />
+                  <Typography variant="body2" component="span">
+                    Date: {expense.date || 'N/A'}
+                  </Typography>
+                </>
+              }
               sx={{
                 '& .MuiTypography-root': {
                   color: 'white',
@@ -43,7 +53,6 @@ function ExpenseList({ expenses }) {
       </List>
     </div>
   );
-  
 }
 
 export default ExpenseList;

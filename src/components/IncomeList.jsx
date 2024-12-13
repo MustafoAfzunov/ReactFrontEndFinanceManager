@@ -23,7 +23,17 @@ function IncomeList({ incomes }) {
           >
             <ListItemText
               primary={`Description: ${income.source}`}
-              secondary={`Amount: $${income.amount}`}
+              secondary={
+                <>
+                  <Typography variant="body2" component="span">
+                    Amount: ${income.amount}
+                  </Typography>
+                  <br />
+                  <Typography variant="body2" component="span">
+                    Date: {income.date || 'N/A'}
+                  </Typography>
+                </>
+              }
               sx={{
                 '& .MuiTypography-root': {
                   color: 'white',
@@ -43,8 +53,6 @@ function IncomeList({ incomes }) {
       </List>
     </div>
   );
-  
-  
 }
 
 export default IncomeList;
