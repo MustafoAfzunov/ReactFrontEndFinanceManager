@@ -82,8 +82,7 @@ function Dashboard() {
     <Box
       sx={{
         minHeight: '100vh',
-        backgroundImage:
-          'url(https://w0.peakpx.com/wallpaper/8/305/HD-wallpaper-finance-concepts-charts-background-with-graphs-stock-exchanges-money-business-concepts-finance.jpg)',
+        backgroundImage:'url(https://watermark.lovepik.com/photo/40169/8241.jpg_wh1200.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         display: 'flex',
