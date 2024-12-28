@@ -39,31 +39,63 @@ function AddIncomeForm({ fetchIncomes, fetchBalance }) {
 
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2, mb: 2 }}>
-      {error && <Alert severity="error">{error}</Alert>}
-      <TextField
-        label="Source"
-        variant="outlined"
-        margin="normal"
-        required
-        fullWidth
-        value={source}
-        onChange={(e) => setSource(e.target.value)}
-      />
-      <TextField
-        label="Amount"
-        variant="outlined"
-        margin="normal"
-        required
-        fullWidth
-        type="number"
-        inputProps={{ step: '0.01' }}
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
-      <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
-        Add Income
-      </Button>
-    </Box>
+  {error && <Alert severity="error">{error}</Alert>}
+
+  <TextField
+    label="Source"
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    value={source}
+    onChange={(e) => setSource(e.target.value)}
+    InputLabelProps={{
+      style: { color: 'white' }, // Change label color to white
+    }}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        color: 'white', // Change the input text color to white
+      },
+      '& .MuiInputLabel-root': {
+        color: 'white', // Ensure the label color is white
+      },
+      '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'white', // Change the border color to white
+      },
+    }}
+  />
+
+  <TextField
+    label="Amount"
+    variant="outlined"
+    margin="normal"
+    required
+    fullWidth
+    type="number"
+    inputProps={{ step: '0.01' }}
+    value={amount}
+    onChange={(e) => setAmount(e.target.value)}
+    InputLabelProps={{
+      style: { color: 'white' }, // Change label color to white
+    }}
+    sx={{
+      '& .MuiOutlinedInput-root': {
+        color: 'white', // Change the input text color to white
+      },
+      '& .MuiInputLabel-root': {
+        color: 'white', // Ensure the label color is white
+      },
+      '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: 'white', // Change the border color to white
+      },
+    }}
+  />
+
+  <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
+    Add Income
+  </Button>
+</Box>
+
   );
 }
 

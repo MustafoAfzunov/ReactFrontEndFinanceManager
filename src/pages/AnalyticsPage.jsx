@@ -28,7 +28,28 @@ function AnalyticsPage({ incomes = [], expenses = [] }) {
   while (incomeAmounts.length < maxEntries) incomeAmounts.push(0);
   while (expenseAmounts.length < maxEntries) expenseAmounts.push(0);
 
-  // Chart data
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top',
+        labels: {
+          color: 'white', // Set the legend label color to white
+          font: {
+            size: 14, // Customize font size
+            family: 'Arial', // Customize font family
+            weight: 'bold', // Make the text bold
+          },
+        },
+      },
+      title: {
+        display: true,
+        text: `Income vs Expenses Analysis (${incomeAmounts.length} Incomes, ${expenseAmounts.length} Expenses)`,
+        color: 'blue',
+      },
+    },
+  };
+  
   const data = {
     labels,
     datasets: [
@@ -50,18 +71,9 @@ function AnalyticsPage({ incomes = [], expenses = [] }) {
       },
     ],
   };
+  
 
-  // Chart options
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: { position: 'top' },
-      title: {
-        display: true,
-        text: `Income vs Expenses Analysis (${incomes.length} Incomes, ${expenses.length} Expenses)`,
-      },
-    },
-  };
+
 
   // Handle no data scenario
   if (!incomes.length && !expenses.length) {

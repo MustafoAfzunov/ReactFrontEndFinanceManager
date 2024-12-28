@@ -39,31 +39,75 @@ function AddExpenseForm({ fetchExpenses, fetchBalance }) {
 
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
-      {error && <Alert severity="error">{error}</Alert>}
-      <TextField
-        label="Category"
-        variant="outlined"
-        fullWidth
-        required
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        sx={{ mb: 2 }}
-      />
-      <TextField
-        label="Amount"
-        variant="outlined"
-        type="number"
-        fullWidth
-        required
-        inputProps={{ step: '0.01' }}
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-        sx={{ mb: 2 }}
-      />
-      <Button type="submit" variant="contained" color="primary" fullWidth>
-        Add Expense
-      </Button>
-    </Box>
+    {error && <Alert severity="error">{error}</Alert>}
+    
+    <TextField
+      label="category"
+      variant="outlined"
+      fullWidth
+      required
+      value={category}
+      onChange={(e) => setCategory(e.target.value)}
+      sx={{
+        mb: 2,
+        '& .MuiOutlinedInput-root': {
+          color: 'white', // Input text color
+        },
+        '& .MuiInputLabel-root': {
+          color: 'white', // Label text color
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+          borderColor: 'white', // Outline color
+        },
+      }}
+      InputLabelProps={{
+        style: { color: 'white' }, // Additional label styling
+      }}
+    />
+    
+    <TextField
+      label="Amount"
+      variant="outlined"
+      type="number"
+      fullWidth
+      required
+      inputProps={{ step: '0.01' }}
+      value={amount}
+      onChange={(e) => setAmount(e.target.value)}
+      sx={{
+        mb: 2,
+        '& .MuiOutlinedInput-root': {
+          color: 'white', // Input text color
+        },
+        '& .MuiInputLabel-root': {
+          color: 'white', // Label text color
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+          borderColor: 'white', // Outline color
+        },
+      }}
+      InputLabelProps={{
+        style: { color: 'white' }, // Additional label styling
+      }}
+    />
+    
+    <Button
+      type="submit"
+      variant="contained"
+      color="primary"
+      fullWidth
+      sx={{
+        mt: 2, // Adds top margin to the button for spacing
+        backgroundColor: 'blue', // Customize button color
+        '&:hover': {
+          backgroundColor: 'darkblue', // Darker color on hover
+        },
+      }}
+    >
+      Add Expense
+    </Button>
+  </Box>
+  
   );
 }
 

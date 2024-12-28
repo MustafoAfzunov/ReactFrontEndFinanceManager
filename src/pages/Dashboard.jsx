@@ -237,7 +237,7 @@ function Dashboard() {
                   borderRadius: '16px',
                   padding: '2rem',
                   color: 'white',
-                  boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
+                  boxShadow: '0px 4px 8px rgba(243, 231, 231, 0.85)',
                 }}
               >
                 <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
