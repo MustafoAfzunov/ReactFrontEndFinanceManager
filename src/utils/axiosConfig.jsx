@@ -4,7 +4,7 @@ import axios from 'axios';
 // Create a single Axios instance
 const axiosInstance = axios.create({
   // baseURL: 'http://localhost:8080',
-  baseURL: 'financemanager-production-27ab.up.railway.app',
+  baseURL: 'https://financemanager-production-27ab.up.railway.app',
 });
 
 // Request interceptor to add the Authorization header
