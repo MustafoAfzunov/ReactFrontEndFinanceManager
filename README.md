@@ -1,5 +1,7 @@
-Finance Manager 
+**Finance Manager**
+
 https://finance-manager-lac-delta.vercel.app - **Deployed link**
+
 Welcome to my FinanceManager Project with React Front and Spring-Boot Back.
 Register to Use my Application:
 ![image](https://github.com/user-attachments/assets/e229cfa4-5510-4cda-9716-d9e2bfdc2287)
